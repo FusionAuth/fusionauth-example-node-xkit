@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {FusionAuthClient} = require('@fusionauth/typescript-client');
-const clientId = '523e4989-a333-4f9f-bb91-9f7cb0d03364';
-const clientSecret = 'JxmpvKVZfUAG4QWfPvT-yTuSF-NJe0sKyWcOJLKsNDA';
+const clientId = 'ff949fdf-55a9-4940-8a8d-87e6bc54da95';
+const clientSecret = '3wLVMoev9y9cnJ0wId1TPXjIWejW6PSjSNcCDBE__NE';
 const client = new FusionAuthClient('noapikeyneeded', 'http://localhost:9011');
 
 /* GET home page. */

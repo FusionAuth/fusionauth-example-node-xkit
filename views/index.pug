@@ -2,7 +2,7 @@ extends layout
 
 
 block content
-  - var clientId = '523e4989-a333-4f9f-bb91-9f7cb0d03364'
+  - var clientId = 'ff949fdf-55a9-4940-8a8d-87e6bc54da95'
   h1= title
   if user
     p Hello #{user.firstName}
@@ -10,3 +10,29 @@ block content
     a(href='http://localhost:9011/oauth2/authorize?client_id='+clientId+'&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth-redirect&scope=offline_access&state='+stateValue) Login
 
   p Welcome to #{title}
+  p 
+    a(href='https://testdan.xkit.co') Integration Catalog
+
+  script(src="https://testdan.xkit.co/xkit.js")
+
+  - var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL3Rlc3RkYW4ueGtpdC5jby9hdXRoL2p3dC9hdWQiLCJpc3MiOiJodHRwczovL3Rlc3RkYW4ueGtpdC5jby9hdXRoL2p3dC9pc3MiLCJzdWIiOiJodHRwczovL3Rlc3RkYW4ueGtpdC5jby9hdXRoL2p3dC9zdWIvdXNlcnMvYWJjIiwiZXhwIjoxNjAyOTA2OTQ5LCJpYXQiOjE2MDI5MDMzNDksImp0aSI6IjJvdmFnNmxoMTA3OWxnc2c2NDAwMDI4aSIsIm5iZiI6MTYwMjkwMzM0OSwieGtpdDpncm91cCI6bnVsbH0.aEQjySk0ObrVlr3aQDICJ2qRuibyfB3MYtBkSHk0iuY"
+  script.
+      xkit.ready(() => { 
+        xkit.login("#{token}")
+        console.log("here");
+        f1();
+      })
+  script.
+    async function f1() {
+      const trellokey = '3c60478a5880234d125ccf202848e7c6';
+      const trelloConnection = await xkit.getConnectionOrConnector("trello");
+      if (trelloConnection.enabled === true) {
+        console.log("installed trello!");
+        console.log(trelloConnection.authorization.access_token);
+        console.log('https://api.trello.com/1/members/me/boards?key='+trellokey+'&token='+trelloConnection.authorization.access_token);
+      } else if (trelloConnection.enabled === false) {
+        console.log("disabled trello installation :(");
+      } else {
+        console.log("they haven't installed trello yet!");
+      }
+    }
