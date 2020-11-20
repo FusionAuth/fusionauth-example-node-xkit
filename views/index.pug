@@ -15,10 +15,9 @@ block content
 
   script(src="https://testdan.xkit.co/xkit.js")
 
-  - var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL3Rlc3RkYW4ueGtpdC5jby9hdXRoL2p3dC9hdWQiLCJpc3MiOiJodHRwczovL3Rlc3RkYW4ueGtpdC5jby9hdXRoL2p3dC9pc3MiLCJzdWIiOiJodHRwczovL3Rlc3RkYW4ueGtpdC5jby9hdXRoL2p3dC9zdWIvdXNlcnMvYWJjIiwiZXhwIjoxNjAyOTA2OTQ5LCJpYXQiOjE2MDI5MDMzNDksImp0aSI6IjJvdmFnNmxoMTA3OWxnc2c2NDAwMDI4aSIsIm5iZiI6MTYwMjkwMzM0OSwieGtpdDpncm91cCI6bnVsbH0.aEQjySk0ObrVlr3aQDICJ2qRuibyfB3MYtBkSHk0iuY"
   script.
       xkit.ready(() => { 
-        xkit.login("#{token}")
+        xkit.login("#{access_token}")
         console.log("here");
         f1();
       })

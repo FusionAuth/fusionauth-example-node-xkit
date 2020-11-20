@@ -3,13 +3,14 @@ const router = express.Router();
 const {FusionAuthClient} = require('@fusionauth/typescript-client');
 const clientId = 'ff949fdf-55a9-4940-8a8d-87e6bc54da95';
 const clientSecret = '3wLVMoev9y9cnJ0wId1TPXjIWejW6PSjSNcCDBE__NE';
-const client = new FusionAuthClient('noapikeyneeded', 'http://localhost:9011');
+const apiKey = 'notneeded'
+const client = new FusionAuthClient(apiKey, 'http://localhost:9011');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   const stateValue = Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15) + Math.random().toString(36).substring(2,15);
   req.session.stateValue = stateValue
-  res.render('index', {user: req.session.user, stateValue: stateValue, title: 'FusionAuth Example'});
+  res.render('index', {user: req.session.user, accessToken: req.session.access_token, stateValue: stateValue, title: 'FusionAuth Example'});
 });
 
 /* OAuth return from FusionAuth */
@@ -28,6 +29,7 @@ router.get('/oauth-redirect', function (req, res, next) {
                                          'http://localhost:3000/oauth-redirect')
       .then((response) => {
         console.log(response.response.access_token);
+        req.session.access_token = response.response.access_token;
         return client.retrieveUserUsingJWT(response.response.access_token);
       })
       .then((response) => {
@@ -37,16 +39,6 @@ router.get('/oauth-redirect', function (req, res, next) {
         res.redirect(302, '/');
       }).catch((err) => {console.log("in error"); console.error(JSON.stringify(err));});
       
-  // This code pushes the access and refresh tokens back to the browser as secure, HTTP-only cookies
-  // client.exchangeOAuthCodeForAccessToken(req.query.code,
-  //                                        clientId,
-  //                                        clientSecret,
-  //                                        'http://localhost:3000/oauth-redirect')
-  //     .then((response) => {
-  //       res.cookie('access_token', response.response.access_token, {httpOnly: true});
-  //       res.cookie('refresh_token', response.response.refresh_token, {httpOnly: true});
-  //       res.redirect(302, '/');
-  //     }).catch((err) => {console.log("in error"); console.error(JSON.stringify(err));});
 });
 
 module.exports = router;
