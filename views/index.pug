@@ -18,17 +18,23 @@ block content
   script.
       xkit.ready(() => { 
         xkit.login("#{access_token}")
-        console.log("here");
         f1();
       })
   script.
     async function f1() {
-      const trellokey = '3c60478a5880234d125ccf202848e7c6';
       const trelloConnection = await xkit.getConnectionOrConnector("trello");
       if (trelloConnection.enabled === true) {
         console.log("installed trello!");
-        console.log(trelloConnection.authorization.access_token);
-        console.log('https://api.trello.com/1/members/me/boards?key='+trellokey+'&token='+trelloConnection.authorization.access_token);
+        const token = trelloConnection.authorization.access_token;
+        const key = trelloConnection.authorization.authorizer.client_id;
+        console.log(trelloConnection);
+        const status = trelloConnection.authorization.status;
+        if (status === "active") {
+           console.log('https://api.trello.com/1/members/me/boards?key='+key+'&token='+token);
+           // do your trello thing
+        } else {
+          console.log("problematic trello installation");
+        }
       } else if (trelloConnection.enabled === false) {
         console.log("disabled trello installation :(");
       } else {
