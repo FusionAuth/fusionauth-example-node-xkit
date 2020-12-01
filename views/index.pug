@@ -18,10 +18,10 @@ block content
   script.
       xkit.ready(() => { 
         xkit.login("#{access_token}")
-        f1();
+        accessTrello();
       })
   script.
-    async function f1() {
+    async function accessTrello() {
       const trelloConnection = await xkit.getConnectionOrConnector("trello");
       if (trelloConnection.enabled === true) {
         console.log("installed trello!");
